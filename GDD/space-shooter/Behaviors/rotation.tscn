@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://duxin4v3whyi"]
+
+[ext_resource type="Script" uid="uid://doglrqpeeoqlq" path="res://Scripts/RotationController.cs" id="1_vclmw"]
+
+[node name="Rotation" type="Node2D" unique_id=653126768]
+script = ExtResource("1_vclmw")
