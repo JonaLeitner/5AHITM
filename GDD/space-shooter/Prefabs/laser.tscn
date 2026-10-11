@@ -2,9 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://btmr02lju4hip" path="res://Assets/Sprites/Laser.png" id="1_l3nus"]
 [ext_resource type="Script" uid="uid://c8bt7t4qk62yq" path="res://Scripts/Laser.cs" id="2_7msou"]
+[ext_resource type="PackedScene" uid="uid://bf5r5rq28gwgl" path="res://Behaviors/linear_movement.tscn" id="3_kdfnu"]
+[ext_resource type="Script" uid="uid://d32g61gmtdcjm" path="res://Scripts/Behaviors/LinearMovementController.cs" id="4_r8hmr"]
 
 [node name="Laser" type="Sprite2D" unique_id=402991406]
 z_index = 1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_l3nus")
 script = ExtResource("2_7msou")
+_speed = null
+
+[node name="Movement" parent="." unique_id=923578668 instance=ExtResource("3_kdfnu")]
+script = ExtResource("4_r8hmr")

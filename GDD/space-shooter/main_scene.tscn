@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://mkug1wju83lt" path="res://Assets/Sprites/SpaceBackground.png" id="4_d5x1h"]
 [ext_resource type="Texture2D" uid="uid://c7mur16cidfue" path="res://Assets/Sprites/Asteroid.png" id="6_nfk4m"]
 [ext_resource type="PackedScene" uid="uid://duxin4v3whyi" path="res://Behaviors/rotation.tscn" id="7_66tet"]
+[ext_resource type="PackedScene" uid="uid://bf5r5rq28gwgl" path="res://Behaviors/linear_movement.tscn" id="8_66tet"]
 
 [node name="WorldRoot" type="Node2D" unique_id=34690621]
 
@@ -15,7 +16,13 @@ position = Vector2(82, 121)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_gyfs4")
 script = ExtResource("2_2c62f")
+_startX = null
+_startY = null
+_speed = null
+_minY = null
+_maxY = null
 _laserPrefab = ExtResource("3_gyfs4")
+_shootCooldownSeconds = null
 _laserSpawnOffset = Vector2(0, -40)
 
 [node name="LaserSound" type="AudioStreamPlayer2D" parent="Player" unique_id=301006923]
@@ -35,3 +42,6 @@ texture = ExtResource("6_nfk4m")
 
 [node name="Rotation" parent="Asteroid/Sprite" unique_id=653126768 instance=ExtResource("7_66tet")]
 scale = Vector2(4, 4)
+_rotationSpeed = null
+
+[node name="LinearMovement" parent="." unique_id=923578668 instance=ExtResource("8_66tet")]
