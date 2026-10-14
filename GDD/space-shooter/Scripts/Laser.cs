@@ -7,7 +7,6 @@ public sealed partial class Laser : Sprite2D
 {
     private static float? _destructionY;
 
-    [Export] private float _speed = 200F;
 
     public override void _Ready()
     {
@@ -30,7 +29,6 @@ public sealed partial class Laser : Sprite2D
 
     public override void _Process(double delta)
     {
-        Translate(Vector2.Up * (float) (delta * _speed));
 
         if (Position.Y < (_destructionY ?? throw new InvalidOperationException("Destruction Y not set")))
         {

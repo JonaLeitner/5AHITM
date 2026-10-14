@@ -14,3 +14,4 @@ _speed = null
 
 [node name="Movement" parent="." unique_id=923578668 instance=ExtResource("3_kdfnu")]
 script = ExtResource("4_r8hmr")
+_speed = 200.0
