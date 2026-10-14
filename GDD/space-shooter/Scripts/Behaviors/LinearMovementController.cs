@@ -11,8 +11,17 @@ public sealed partial class LinearMovementController : ParentBehavior
     [Export]
     private float _speed = 80F;
 
+    private bool _isMoving = true;
+    
+
     public override void _Process(double delta)
     {
+
+        if (!_isMoving)
+        {
+            return;
+        }
+        
         var direction = _direction switch
         {
             LinearMovementDirection.Up => Vector2.Up,
@@ -25,6 +34,11 @@ public sealed partial class LinearMovementController : ParentBehavior
         };
             Parent?.Translate(direction * (float) (delta * _speed));
             
+    }
+    
+    public void StopMoving()
+    {
+        _isMoving = false;
     }
 }
 
