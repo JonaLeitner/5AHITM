@@ -3,7 +3,7 @@ using Godot;
 
 namespace SpaceShooter.Scripts;
 
-public sealed partial class Laser : Sprite2D
+public sealed partial class Laser : Node2D
 {
     private static float? _destructionY;
 
@@ -16,9 +16,12 @@ public sealed partial class Laser : Sprite2D
 
         float CalcDestructionY()
         {
-            var textureHeight = Texture.GetSize().Y * Scale.Y;
+            var sprite = GetNode<Sprite2D>("Collider/LaserSprite")
+                         ?? throw new InvalidOperationException("Sprite not found");
+            
+            var textureHeight = sprite.Texture.GetSize().Y * Scale.Y;
 
-            return -1 * (textureHeight * 0.5F + 1F);
+            return -1 * (textureHeight * 2F + 1F);
         }
 
 

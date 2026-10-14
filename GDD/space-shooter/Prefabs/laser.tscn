@@ -5,13 +5,26 @@
 [ext_resource type="PackedScene" uid="uid://bf5r5rq28gwgl" path="res://Behaviors/linear_movement.tscn" id="3_kdfnu"]
 [ext_resource type="Script" uid="uid://d32g61gmtdcjm" path="res://Scripts/Behaviors/LinearMovementController.cs" id="4_r8hmr"]
 
-[node name="Laser" type="Sprite2D" unique_id=402991406]
-z_index = 1
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_l3nus")
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ldjdr"]
+radius = 9.745533
+height = 30.319435
+
+[node name="Laser" type="Node2D" unique_id=444542122]
 script = ExtResource("2_7msou")
-_speed = null
+
+[node name="Collider" type="Area2D" parent="." unique_id=138921896]
+scale = Vector2(0.1, 0.1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider" unique_id=206964128]
+scale = Vector2(2.15, 9.235)
+shape = SubResource("CapsuleShape2D_ldjdr")
+
+[node name="LaserSprite" type="Sprite2D" parent="Collider" unique_id=402991406]
+z_index = 1
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("1_l3nus")
 
 [node name="Movement" parent="." unique_id=923578668 instance=ExtResource("3_kdfnu")]
+scale = Vector2(0.099999994, 0.099999994)
 script = ExtResource("4_r8hmr")
 _speed = 200.0

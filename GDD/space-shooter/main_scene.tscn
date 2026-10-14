@@ -33,6 +33,7 @@ scale = Vector2(0.6010417, 0.5962963)
 texture = ExtResource("4_d5x1h")
 
 [node name="Asteroid" type="Node2D" parent="." unique_id=2055160652]
+position = Vector2(200, 0)
 script = ExtResource("6_wr18j")
 
 [node name="LinearMovement" parent="Asteroid" unique_id=923578668 instance=ExtResource("8_66tet")]
