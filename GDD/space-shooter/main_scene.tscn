@@ -694,7 +694,7 @@ texture = ExtResource("6_nfk4m")
 [node name="Rotation" parent="Asteroid/Collider/Sprite" unique_id=653126768 instance=ExtResource("7_66tet")]
 scale = Vector2(4, 4)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Asteroid" unique_id=1745972637]
+[node name="Explosion" type="AnimatedSprite2D" parent="Asteroid" unique_id=1745972637]
 sprite_frames = SubResource("SpriteFrames_77quw")
 
 [connection signal="area_entered" from="Asteroid/Collider" to="Asteroid" method="onCollision"]
