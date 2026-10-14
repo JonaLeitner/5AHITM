@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://csbo3ruktotev"]
+
+[ext_resource type="Script" uid="uid://dv4sg4r1wbrb6" path="res://Scripts/Behaviors/PositionResetController.cs" id="1_vo3vi"]
+
+[node name="PositionReset" type="Node2D" unique_id=193575317]
+script = ExtResource("1_vo3vi")

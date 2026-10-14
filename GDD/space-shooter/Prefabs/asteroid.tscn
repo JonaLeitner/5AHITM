@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ygry4t3pp1ew"]
 
 [ext_resource type="Script" uid="uid://w588iu02lvdr" path="res://Scripts/Asteroid.cs" id="1_coj77"]
+[ext_resource type="PackedScene" uid="uid://csbo3ruktotev" path="res://Behaviors/position_reset.tscn" id="2_3j0b6"]
 [ext_resource type="PackedScene" uid="uid://bf5r5rq28gwgl" path="res://Behaviors/linear_movement.tscn" id="2_squaq"]
 [ext_resource type="Script" uid="uid://d32g61gmtdcjm" path="res://Scripts/Behaviors/LinearMovementController.cs" id="3_3j0b6"]
 [ext_resource type="Texture2D" uid="uid://c7mur16cidfue" path="res://Assets/Sprites/Asteroid.png" id="4_rq8ck"]
@@ -656,6 +657,8 @@ script = ExtResource("1_coj77")
 script = ExtResource("3_3j0b6")
 _direction = 1
 _speed = 50.0
+
+[node name="PositionReset" parent="." unique_id=193575317 instance=ExtResource("2_3j0b6")]
 
 [node name="Collider" type="Area2D" parent="." unique_id=1770858026]
 

@@ -39,13 +39,19 @@ public sealed partial class SpawnManager : Node2D
         enemy.Position = spawnPos;
         AddChild(enemy);
         return;
-
-        float SelectSpawnPosition()
+        
+    }
+    
+    public float SelectSpawnPosition()
+    {
+        if (_spawnRange is null)
         {
-            var rand = Random.Shared.NextSingle();
-            var value = rand * (_spawnRange.Value.MaxX - _spawnRange.Value.MinX)
-                        + _spawnRange.Value.MinX;
-            return value;
+            throw new InvalidOperationException("Spawn range not set");
         }
+        
+        var rand = Random.Shared.NextSingle();
+        var value = rand * (_spawnRange.Value.MaxX - _spawnRange.Value.MinX)
+                    + _spawnRange.Value.MinX;
+        return value;
     }
 }
