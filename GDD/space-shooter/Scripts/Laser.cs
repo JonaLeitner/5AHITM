@@ -16,8 +16,8 @@ public sealed partial class Laser : Node2D
 
         float CalcDestructionY()
         {
-            var sprite = GetNode<Sprite2D>("Collider/LaserSprite")
-                         ?? throw new InvalidOperationException("Sprite not found");
+
+            var sprite = this.GetNodeOrThrow<Sprite2D>("Collider/LaserSprite");
             
             var textureHeight = sprite.Texture.GetSize().Y * Scale.Y;
 
