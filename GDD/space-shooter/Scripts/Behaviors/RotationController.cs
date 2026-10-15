@@ -8,7 +8,7 @@ public sealed partial class RotationController : ParentBehavior
     [Export] private float _rotationSpeed = 20F;
     
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         var degreesPerSecond = _rotationSpeed;
         var radiansPerSecond = (float)Mathf.DegToRad(degreesPerSecond);

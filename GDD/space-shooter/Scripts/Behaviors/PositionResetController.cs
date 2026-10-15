@@ -16,7 +16,7 @@ public sealed partial class PositionResetController : ParentBehavior
         _spawnManager ??=
             this.GetNodeOrThrow<SpawnManager>("/root/WorldRoot/SpawnManager"); 
     }
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         if (Parent is null)
         {
@@ -26,8 +26,8 @@ public sealed partial class PositionResetController : ParentBehavior
         {
             return;
         }
-        var newX = _spawnManager?.SelectSpawnPosition()
-                   ?? throw new InvalidOperationException("SpawnManger is not set");
+        var newX = _spawnManager?.SelectSpawnPosition() 
+                    ?? throw new InvalidOperationException("SpawnManger is not set");
             
         Parent.Position = new Vector2(newX, _respawnY); 
     }

@@ -51,7 +51,7 @@ public partial class Player : Sprite2D
 
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
 
    

@@ -14,7 +14,7 @@ public sealed partial class LinearMovementController : ParentBehavior
     private bool _isMoving = true;
     
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
 
         if (!_isMoving)
