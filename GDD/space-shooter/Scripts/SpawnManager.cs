@@ -9,38 +9,65 @@ public sealed partial class SpawnManager : Node2D
 {
     private const float SpawnOffset = 80F;
     private const float SpawnYPosition = -50F;
-    [Export] private PackedScene? _asteroidPrefab;
+
+    private int _currentlyActiveEnemies;
     private SpawnAxisRange? _spawnRange;
+    private Timer? _spawnTimer;
+
+    [Export] private PackedScene? _asteroidPrefab;
+
+    [Export] private int _maxEnemies = 25;
+
+    [Export] private Curve? _spawnRate;
 
     public override void _Ready()
     {
         var windowWidth = GetViewportRect().Size.X;
         _spawnRange = (SpawnOffset, windowWidth - SpawnOffset);
-        var spawnTimer = new Timer
+        _currentlyActiveEnemies = 0;
+        
+        _spawnTimer = new Timer
         {
-            WaitTime = 2D,
+            WaitTime = 0.1D,
             OneShot = false,
             Autostart = false
         };
-        AddChild(spawnTimer);
-        spawnTimer.Timeout += HandleTimerTick;
-        spawnTimer.Start();
+        AddChild(_spawnTimer);
+        _spawnTimer.Timeout += HandleTimerTick;
+        SetSpawnTimerTimeout(CalcSpawnInterval());
+        
+    }
+
+    private void SetSpawnTimerTimeout(TimeSpan interval)
+    {
+        if (_spawnTimer is null)
+        {
+            throw new InvalidOperationException("Spawn timer not set");
+        }
+
+        _spawnTimer.WaitTime = interval.TotalSeconds;
+        _spawnTimer.Start();
+        
+        
     }
 
     private void HandleTimerTick()
     {
-        if (_asteroidPrefab is null || _spawnRange is null)
+        if (_asteroidPrefab is null)
         {
-            throw new InvalidOperationException("Spawn configuration incomplete");
+            throw new InvalidOperationException("Asteroid prefab not set");
         }
 
         var spawnPos = new Vector2(SelectSpawnPosition(), SpawnYPosition);
         var enemy = _asteroidPrefab.Instantiate<Asteroid>();
         enemy.Position = spawnPos;
         AddChild(enemy);
-        return;
-        
+        _currentlyActiveEnemies++;
+        SetSpawnTimerTimeout(CalcSpawnInterval());
+
     }
+
+
     
     public float SelectSpawnPosition()
     {
@@ -53,5 +80,21 @@ public sealed partial class SpawnManager : Node2D
         var value = rand * (_spawnRange.Value.MaxX - _spawnRange.Value.MinX)
                     + _spawnRange.Value.MinX;
         return value;
+    }
+    
+    public TimeSpan CalcSpawnInterval()
+    {
+        if (_spawnRate is null)
+        {
+            throw new InvalidOperationException("Spawn rate not set");
+        }
+
+        var xValue = _currentlyActiveEnemies / (float)_maxEnemies;
+
+        var spawnRate = _spawnRate.Sample(xValue);
+
+        var spawnInterval = 2F / spawnRate;
+
+        return TimeSpan.FromSeconds(spawnInterval);
     }
 }

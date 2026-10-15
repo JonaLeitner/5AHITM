@@ -8,6 +8,11 @@
 [ext_resource type="Script" uid="uid://c0tf55qn0i1hb" path="res://Scripts/SpawnManager.cs" id="6_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://ygry4t3pp1ew" path="res://Prefabs/asteroid.tscn" id="7_nfk4m"]
 
+[sub_resource type="Curve" id="Curve_ldjdr"]
+_limits = [1.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0.0076045617, 1), 0.0, 0.0, 0, 0, Vector2(0.25475284, 1.5463917), 0.0, 0.0, 0, 0, Vector2(0.47148287, 1.6597939), 0.0, 0.0, 0, 0, Vector2(0.6425856, 2), 0.0, 0.0, 0, 0, Vector2(0.8631179, 1.5876288), 0.0, 0.0, 0, 0, Vector2(1, 1.0309279), 0.0, 0.0, 0, 0]
+point_count = 6
+
 [node name="WorldRoot" type="Node2D" unique_id=34690621]
 
 [node name="Player" type="Sprite2D" parent="." unique_id=2070182128]
@@ -15,7 +20,9 @@ position = Vector2(82, 121)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_gyfs4")
 script = ExtResource("2_2c62f")
+_speed = 3000.0
 _laserPrefab = ExtResource("3_gyfs4")
+_shootCooldownSeconds = 0.0
 _laserSpawnOffset = Vector2(0, -40)
 
 [node name="LaserSound" type="AudioStreamPlayer2D" parent="Player" unique_id=301006923]
@@ -30,3 +37,4 @@ texture = ExtResource("4_d5x1h")
 [node name="SpawnManager" type="Node2D" parent="." unique_id=1925918591]
 script = ExtResource("6_hq1ik")
 _asteroidPrefab = ExtResource("7_nfk4m")
+_spawnRate = SubResource("Curve_ldjdr")
