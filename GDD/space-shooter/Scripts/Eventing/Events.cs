@@ -11,5 +11,8 @@ public readonly record struct EnemyDestroyed(EnemyDestroyed.Reason DestroyReason
         Player
     }
 }
+
+public readonly record struct GameOver : IEvent;
+
 public readonly record struct PlayerLifeLost(int LivesRemaining) : IEvent; 
 }

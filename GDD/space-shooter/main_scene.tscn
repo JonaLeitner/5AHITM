@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bi388exgbcc1d"]
 
+[ext_resource type="Script" uid="uid://bvq40udps6vki" path="res://Scripts/GameManager.cs" id="1_7th4q"]
 [ext_resource type="Texture2D" uid="uid://b75wvf627aa5n" path="res://Assets/Sprites/Player.png" id="1_gyfs4"]
 [ext_resource type="Script" uid="uid://b7mdn1nc3qen1" path="res://Scripts/Player.cs" id="2_2c62f"]
+[ext_resource type="AudioStream" uid="uid://bbetptnikp7ni" path="res://Assets/Sounds/music_background.wav" id="2_m35m6"]
 [ext_resource type="PackedScene" uid="uid://d4ax2gd2x8aka" path="res://Prefabs/laser.tscn" id="3_gyfs4"]
 [ext_resource type="AudioStream" uid="uid://dg403lcubp5sh" path="res://Assets/Sounds/laser_shot.wav" id="4_8mm7a"]
 [ext_resource type="Texture2D" uid="uid://mkug1wju83lt" path="res://Assets/Sprites/SpaceBackground.png" id="4_d5x1h"]
@@ -15,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cw446fm153wqn" path="res://Assets/Sprites/UI/Lives/Two.png" id="13_u0ygc"]
 [ext_resource type="Texture2D" uid="uid://0qrqcnuxic84" path="res://Assets/Sprites/UI/Lives/Three.png" id="14_7th4q"]
 [ext_resource type="Texture2D" uid="uid://dcobnrjq288ed" path="res://Assets/Sprites/UI/Lives/no_lives.png" id="15_6jybn"]
+[ext_resource type="Script" uid="uid://ck583eg7eaplr" path="res://Scripts/UI/GameOverLabel.cs" id="18_6jybn"]
 
 [sub_resource type="Curve" id="Curve_ldjdr"]
 _limits = [1.0, 2.0, 0.0, 1.0]
@@ -25,12 +28,17 @@ point_count = 6
 bg_color = Color(0.004019165, 0.004019165, 0.004019165, 1)
 
 [node name="WorldRoot" type="Node2D" unique_id=34690621]
+script = ExtResource("1_7th4q")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1213210453]
 z_index = -1
 position = Vector2(578, 324)
 scale = Vector2(0.6010417, 0.5962963)
 texture = ExtResource("4_d5x1h")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="Background" unique_id=1009736649]
+stream = ExtResource("2_m35m6")
+autoplay = true
 
 [node name="SpawnManager" type="Node2D" parent="." unique_id=1925918591]
 script = ExtResource("6_hq1ik")
@@ -108,3 +116,21 @@ _oneLifeTexture = ExtResource("12_m35m6")
 _twoLivesTexture = ExtResource("13_u0ygc")
 _threeLivesTexture = ExtResource("14_7th4q")
 _zeroLivesTexture = ExtResource("15_6jybn")
+
+[node name="GameOver" type="Label" parent="UI" unique_id=390993290]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.6492512, 0.036289442, 0.11510716, 1)
+theme_override_font_sizes/font_size = 48
+text = "Game Over"
+script = ExtResource("18_6jybn")

@@ -15,6 +15,7 @@ public sealed partial class SpawnManager : Node2D
     private SpawnAxisRange? _spawnRange;
     private Timer? _spawnTimer;
     private EventManager? _eventManager;
+    private bool _stopSpawning;
 
     [Export] private PackedScene? _asteroidPrefab;
 
@@ -26,12 +27,14 @@ public sealed partial class SpawnManager : Node2D
     {
         var windowWidth = GetViewportRect().Size.X;
         _spawnRange = (SpawnOffset, windowWidth - SpawnOffset);
-        
+
         _currentlyActiveEnemies = 0;
+        _stopSpawning = false;
 
         _eventManager = this.GetNodeOrThrow<EventManager>(EventManager.Path);
         _eventManager.Subscribe<Events.EnemyDestroyed>(this, _ => _currentlyActiveEnemies--);
-        
+        _eventManager.Subscribe<Events.GameOver>(this, _ => _stopSpawning = true);
+
         _spawnTimer = new Timer
         {
             WaitTime = 2D,
@@ -47,6 +50,7 @@ public sealed partial class SpawnManager : Node2D
     {
         _eventManager?.Unsubscribe<Events.EnemyDestroyed>(this);
         base._ExitTree();
+        _eventManager?.Unsubscribe<Events.GameOver>(this);
     }
 
     private void SetSpawnTimerTimeout(TimeSpan interval)
@@ -58,8 +62,6 @@ public sealed partial class SpawnManager : Node2D
 
         _spawnTimer.WaitTime = interval.TotalSeconds;
         _spawnTimer.Start();
-        
-        
     }
 
     private void HandleTimerTick()
@@ -75,31 +77,33 @@ public sealed partial class SpawnManager : Node2D
             return;
         }
 
-        var spawnPos = new Vector2(SelectSpawnPosition(), SpawnYPosition);
-        var enemy = _asteroidPrefab.Instantiate<Asteroid>();
-        enemy.Position = spawnPos;
-        AddChild(enemy);
-        _currentlyActiveEnemies++;
+        if (!_stopSpawning)
+        {
+            var spawnPos = new Vector2(SelectSpawnPosition(), SpawnYPosition);
+            var enemy = _asteroidPrefab.Instantiate<Asteroid>();
+            enemy.Position = spawnPos;
+            AddChild(enemy);
+            _currentlyActiveEnemies++;
+        }
+
         // GD.Print("Active Enemies: " + _currentlyActiveEnemies);
         SetSpawnTimerTimeout(CalcSpawnInterval());
-
     }
 
 
-    
     public float SelectSpawnPosition()
     {
         if (_spawnRange is null)
         {
             throw new InvalidOperationException("Spawn range not set");
         }
-        
+
         var rand = Random.Shared.NextSingle();
         var value = rand * (_spawnRange.Value.MaxX - _spawnRange.Value.MinX)
                     + _spawnRange.Value.MinX;
         return value;
     }
-    
+
     public TimeSpan CalcSpawnInterval()
     {
         if (_spawnRate is null)

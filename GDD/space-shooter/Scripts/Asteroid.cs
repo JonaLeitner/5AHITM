@@ -12,12 +12,22 @@ public partial class Asteroid : Node2D
     private Sprite2D? _mainSprite;
     private AnimatedSprite2D? _explosionSprite;
     private bool _exploding;
+    private EventManager? _eventManager;
+    
 
 
     public override void _Ready()
     {
         _mainSprite = this.GetNodeOrThrow<Sprite2D>("Collider/Sprite");
         _explosionSprite = this.GetNodeOrThrow<AnimatedSprite2D>("Explosion");
+        _eventManager = this.GetNodeOrThrow<EventManager>(EventManager.Path);
+        
+        _eventManager.Subscribe<Events.GameOver>(this, _ =>
+        {
+            var movementController =
+                this.GetNodeOrThrow<LinearMovementController>("LinearMovement");
+            movementController.StopMoving();
+        });
 
         _exploding = false;
         _explosionSprite.Hide();
@@ -55,9 +65,11 @@ public partial class Asteroid : Node2D
             _exploding = true;
             this.GetNodeOrThrow<LinearMovementController>("LinearMovement").StopMoving();
             this.GetNodeOrThrow<AudioStreamPlayer2D>("ExplosionSound").Play();
-            this.GetNodeOrThrow<EventManager>(EventManager.Path)
-                .Broadcast(new Events.EnemyDestroyed(reason));
-
+            _eventManager?.Broadcast(new Events.EnemyDestroyed(reason));
+            // this.GetNodeOrThrow<EventManager>(EventManager.Path)
+            //     .Broadcast(new Events.EnemyDestroyed(reason));
+            
+            
             _explosionSprite?.Show();
             _explosionSprite?.Play();
 
@@ -85,6 +97,8 @@ public partial class Asteroid : Node2D
         {
             _explosionSprite.AnimationFinished -= HandleExplosionFinished;
         }
+        
+        _eventManager?.Unsubscribe<Events.GameOver>(this);
 
         base._ExitTree();
     }
