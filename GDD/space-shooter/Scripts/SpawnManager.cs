@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Spaceshooter.Scripts;
+using SpaceShooter.Scripts.Eventing;
 using SpawnAxisRange = (float MinX, float MaxX);
 
 namespace SpaceShooter.Scripts;
@@ -13,6 +14,7 @@ public sealed partial class SpawnManager : Node2D
     private int _currentlyActiveEnemies;
     private SpawnAxisRange? _spawnRange;
     private Timer? _spawnTimer;
+    private EventManager? _eventManager;
 
     [Export] private PackedScene? _asteroidPrefab;
 
@@ -24,18 +26,27 @@ public sealed partial class SpawnManager : Node2D
     {
         var windowWidth = GetViewportRect().Size.X;
         _spawnRange = (SpawnOffset, windowWidth - SpawnOffset);
+        
         _currentlyActiveEnemies = 0;
+
+        _eventManager = this.GetNodeOrThrow<EventManager>(EventManager.Path);
+        _eventManager.Subscribe<Events.EnemyDestroyed>(this, _ => _currentlyActiveEnemies--);
         
         _spawnTimer = new Timer
         {
-            WaitTime = 0.1D,
+            WaitTime = 2D,
             OneShot = false,
             Autostart = false
         };
         AddChild(_spawnTimer);
         _spawnTimer.Timeout += HandleTimerTick;
         SetSpawnTimerTimeout(CalcSpawnInterval());
-        
+    }
+
+    public override void _ExitTree()
+    {
+        _eventManager?.Unsubscribe<Events.EnemyDestroyed>(this);
+        base._ExitTree();
     }
 
     private void SetSpawnTimerTimeout(TimeSpan interval)
@@ -58,11 +69,18 @@ public sealed partial class SpawnManager : Node2D
             throw new InvalidOperationException("Asteroid prefab not set");
         }
 
+        if (_currentlyActiveEnemies >= _maxEnemies)
+        {
+            // GD.Print("Reached asteroid cap");
+            return;
+        }
+
         var spawnPos = new Vector2(SelectSpawnPosition(), SpawnYPosition);
         var enemy = _asteroidPrefab.Instantiate<Asteroid>();
         enemy.Position = spawnPos;
         AddChild(enemy);
         _currentlyActiveEnemies++;
+        // GD.Print("Active Enemies: " + _currentlyActiveEnemies);
         SetSpawnTimerTimeout(CalcSpawnInterval());
 
     }

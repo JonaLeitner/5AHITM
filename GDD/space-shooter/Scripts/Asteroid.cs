@@ -1,5 +1,6 @@
 using SpaceShooter.Scripts;
 using SpaceShooter.Scripts.Behaviors;
+using SpaceShooter.Scripts.Eventing;
 
 namespace Spaceshooter.Scripts;
 
@@ -38,6 +39,8 @@ public partial class Asteroid : Node2D
             _exploding = true;
             this.GetNodeOrThrow<LinearMovementController>("LinearMovement").StopMoving();
             this.GetNodeOrThrow<AudioStreamPlayer2D>("ExplosionSound").Play();
+            this.GetNodeOrThrow<EventManager>(EventManager.Path)
+                .Broadcast(new Events.EnemyDestroyed(Events.EnemyDestroyed.Reason.Laser));
             
             _explosionSprite?.Show();
             _explosionSprite?.Play();
