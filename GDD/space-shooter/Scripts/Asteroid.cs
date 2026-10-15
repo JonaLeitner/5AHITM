@@ -36,6 +36,7 @@ public partial class Asteroid : Node2D
 
 
             var otherParent = other.GetParent();
+            var reason = Events.EnemyDestroyed.Reason.Laser;
             if (otherParent is not Laser)
             {
                 if (otherParent is not Player player)
@@ -44,6 +45,7 @@ public partial class Asteroid : Node2D
                 }
 
                 player.TakeDamage();
+                reason = Events.EnemyDestroyed.Reason.Player;
             }
             else
             {
@@ -54,7 +56,7 @@ public partial class Asteroid : Node2D
             this.GetNodeOrThrow<LinearMovementController>("LinearMovement").StopMoving();
             this.GetNodeOrThrow<AudioStreamPlayer2D>("ExplosionSound").Play();
             this.GetNodeOrThrow<EventManager>(EventManager.Path)
-                .Broadcast(new Events.EnemyDestroyed(Events.EnemyDestroyed.Reason.Laser));
+                .Broadcast(new Events.EnemyDestroyed(reason));
 
             _explosionSprite?.Show();
             _explosionSprite?.Play();

@@ -9,11 +9,20 @@
 [ext_resource type="PackedScene" uid="uid://ygry4t3pp1ew" path="res://Prefabs/asteroid.tscn" id="7_nfk4m"]
 [ext_resource type="PackedScene" uid="uid://x4t2j5dgge5s" path="res://Prefabs/damage.tscn" id="8_7ycvg"]
 [ext_resource type="PackedScene" uid="uid://j2yhha8kgunu" path="res://Prefabs/thruster.tscn" id="9_wr18j"]
+[ext_resource type="Script" uid="uid://e0gdfv0rocu7" path="res://Scripts/UI/ScoreLabel.cs" id="10_wr18j"]
+[ext_resource type="Script" uid="uid://4c4cbwaot2b7" path="res://Scripts/UI/LivesDisplay.cs" id="11_2jcla"]
+[ext_resource type="Texture2D" uid="uid://4w0fifp3wji5" path="res://Assets/Sprites/UI/Lives/One.png" id="12_m35m6"]
+[ext_resource type="Texture2D" uid="uid://cw446fm153wqn" path="res://Assets/Sprites/UI/Lives/Two.png" id="13_u0ygc"]
+[ext_resource type="Texture2D" uid="uid://0qrqcnuxic84" path="res://Assets/Sprites/UI/Lives/Three.png" id="14_7th4q"]
+[ext_resource type="Texture2D" uid="uid://dcobnrjq288ed" path="res://Assets/Sprites/UI/Lives/no_lives.png" id="15_6jybn"]
 
 [sub_resource type="Curve" id="Curve_ldjdr"]
 _limits = [1.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0.0076045617, 1), 0.0, 0.0, 0, 0, Vector2(0.25475284, 1.5463917), 0.0, 0.0, 0, 0, Vector2(0.47148287, 1.6597939), 0.0, 0.0, 0, 0, Vector2(0.6425856, 2), 0.0, 0.0, 0, 0, Vector2(0.8631179, 1.5876288), 0.0, 0.0, 0, 0, Vector2(1, 1.0309279), 0.0, 0.0, 0, 0]
 point_count = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_77quw"]
+bg_color = Color(0.004019165, 0.004019165, 0.004019165, 1)
 
 [node name="WorldRoot" type="Node2D" unique_id=34690621]
 
@@ -50,13 +59,52 @@ texture = ExtResource("1_gyfs4")
 
 [node name="Damage_One" parent="Player" unique_id=1409147006 instance=ExtResource("8_7ycvg")]
 visible = false
+z_index = 2
 position = Vector2(22.445, 57.34)
 
 [node name="Damage_Two" parent="Player" unique_id=1370434178 instance=ExtResource("8_7ycvg")]
 visible = false
+z_index = 2
 position = Vector2(-11.14, 39.79)
 
 [node name="Thruster" parent="Player" unique_id=1346453894 instance=ExtResource("9_wr18j")]
 z_index = 1
 position = Vector2(0, 42.785)
 scale = Vector2(0.1, 0.1)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=825582726]
+
+[node name="Score" type="Label" parent="UI" unique_id=757878706]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -148.0
+offset_right = -16.0
+offset_bottom = -116.0
+grow_horizontal = 0
+grow_vertical = 0
+tooltip_text = "Score: 0000"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_77quw")
+text = "Score: 0000"
+script = ExtResource("10_wr18j")
+
+[node name="LivesDisplay" type="TextureRect" parent="UI" unique_id=715650983]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -88.0
+offset_right = 60.0
+offset_bottom = -48.0
+grow_vertical = 0
+scale = Vector2(0.6, 0.6)
+script = ExtResource("11_2jcla")
+_oneLifeTexture = ExtResource("12_m35m6")
+_twoLivesTexture = ExtResource("13_u0ygc")
+_threeLivesTexture = ExtResource("14_7th4q")
+_zeroLivesTexture = ExtResource("15_6jybn")
