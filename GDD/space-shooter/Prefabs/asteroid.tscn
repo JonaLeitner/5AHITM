@@ -674,6 +674,7 @@ texture = ExtResource("4_rq8ck")
 scale = Vector2(4, 4)
 
 [node name="Explosion" type="AnimatedSprite2D" parent="." unique_id=1779959005]
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_77quw")
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="." unique_id=1290043500]

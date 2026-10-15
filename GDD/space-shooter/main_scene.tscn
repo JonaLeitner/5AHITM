@@ -20,9 +20,7 @@ position = Vector2(82, 121)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_gyfs4")
 script = ExtResource("2_2c62f")
-_speed = 3000.0
 _laserPrefab = ExtResource("3_gyfs4")
-_shootCooldownSeconds = 0.0
 _laserSpawnOffset = Vector2(0, -40)
 
 [node name="LaserSound" type="AudioStreamPlayer2D" parent="Player" unique_id=301006923]
