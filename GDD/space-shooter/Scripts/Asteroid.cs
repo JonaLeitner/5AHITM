@@ -29,19 +29,33 @@ public partial class Asteroid : Node2D
     {
         try
         {
-            if (_exploding || other.Owner is not Laser)
+            if (_exploding)
             {
                 return;
             }
 
-            other.Owner.Free();
+
+            var otherParent = other.GetParent();
+            if (otherParent is not Laser)
+            {
+                if (otherParent is not Player player)
+                {
+                    return;
+                }
+
+                player.TakeDamage();
+            }
+            else
+            {
+                otherParent.Free();
+            }
 
             _exploding = true;
             this.GetNodeOrThrow<LinearMovementController>("LinearMovement").StopMoving();
             this.GetNodeOrThrow<AudioStreamPlayer2D>("ExplosionSound").Play();
             this.GetNodeOrThrow<EventManager>(EventManager.Path)
                 .Broadcast(new Events.EnemyDestroyed(Events.EnemyDestroyed.Reason.Laser));
-            
+
             _explosionSprite?.Show();
             _explosionSprite?.Play();
 

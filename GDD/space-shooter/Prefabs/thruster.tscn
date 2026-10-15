@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://j2yhha8kgunu"]
+
+[ext_resource type="Texture2D" uid="uid://dy724hg2a2xga" path="res://Assets/Sprites/Thruster/Thruster_00000.png" id="1_he4ht"]
+[ext_resource type="Texture2D" uid="uid://dctqqrtbmbgj0" path="res://Assets/Sprites/Thruster/Thruster_00001.png" id="2_03pac"]
+[ext_resource type="Texture2D" uid="uid://dd7adxy5kdnvk" path="res://Assets/Sprites/Thruster/Thruster_00002.png" id="3_2kxn5"]
+[ext_resource type="Texture2D" uid="uid://cg31mricixw2m" path="res://Assets/Sprites/Thruster/Thruster_00003.png" id="4_8g6w2"]
+[ext_resource type="Texture2D" uid="uid://bq3exf3y3wa8m" path="res://Assets/Sprites/Thruster/Thruster_00004.png" id="5_s3xcv"]
+[ext_resource type="Texture2D" uid="uid://cnhj6w7ktbc8j" path="res://Assets/Sprites/Thruster/Thruster_00005.png" id="6_j17v3"]
+[ext_resource type="Texture2D" uid="uid://bpd8y651y1atg" path="res://Assets/Sprites/Thruster/Thruster_00006.png" id="7_ih1o8"]
+[ext_resource type="Texture2D" uid="uid://lhlej853dh" path="res://Assets/Sprites/Thruster/Thruster_00007.png" id="8_2reev"]
+[ext_resource type="Texture2D" uid="uid://b41uwbjavw5db" path="res://Assets/Sprites/Thruster/Thruster_00008.png" id="9_0rvpt"]
+[ext_resource type="Texture2D" uid="uid://bocwnohkxi3e7" path="res://Assets/Sprites/Thruster/Thruster_00009.png" id="10_tnjil"]
+[ext_resource type="Texture2D" uid="uid://bs8eaq8d6q1rd" path="res://Assets/Sprites/Thruster/Thruster_00010.png" id="11_y4oqg"]
+[ext_resource type="Texture2D" uid="uid://ce77i88inng3n" path="res://Assets/Sprites/Thruster/Thruster_00011.png" id="12_iv7jr"]
+[ext_resource type="Texture2D" uid="uid://b1g6f2x2hg6rn" path="res://Assets/Sprites/Thruster/Thruster_00012.png" id="13_w5ycn"]
+[ext_resource type="Texture2D" uid="uid://bag2l3bpbnqqq" path="res://Assets/Sprites/Thruster/Thruster_00013.png" id="14_ynxyu"]
+[ext_resource type="Texture2D" uid="uid://c25my0507wxt8" path="res://Assets/Sprites/Thruster/Thruster_00014.png" id="15_mc2am"]
+[ext_resource type="Texture2D" uid="uid://7uhphpbojkt1" path="res://Assets/Sprites/Thruster/Thruster_00015.png" id="16_8jwk6"]
+[ext_resource type="Texture2D" uid="uid://d0xnmn22iwkhd" path="res://Assets/Sprites/Thruster/Thruster_00016.png" id="17_lvgfp"]
+[ext_resource type="Texture2D" uid="uid://btvj15qmt6kw8" path="res://Assets/Sprites/Thruster/Thruster_00017.png" id="18_2jk4w"]
+[ext_resource type="Texture2D" uid="uid://chobffyiatq7m" path="res://Assets/Sprites/Thruster/Thruster_00018.png" id="19_vjtp1"]
+[ext_resource type="Texture2D" uid="uid://hpbhruvok23b" path="res://Assets/Sprites/Thruster/Thruster_00019.png" id="20_w46qn"]
+[ext_resource type="Texture2D" uid="uid://bd8negchvd1kc" path="res://Assets/Sprites/Thruster/Thruster_00020.png" id="21_tmsa0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ldjdr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_he4ht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_03pac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2kxn5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8g6w2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_s3xcv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_j17v3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ih1o8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2reev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0rvpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_tnjil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_y4oqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_iv7jr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_w5ycn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ynxyu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_mc2am")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_8jwk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_lvgfp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_2jk4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_vjtp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_w46qn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_tmsa0")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="Thruster" type="Node2D" unique_id=1346453894]
+
+[node name="ThrusterAnimation" type="AnimatedSprite2D" parent="." unique_id=1210732999]
+sprite_frames = SubResource("SpriteFrames_ldjdr")
+autoplay = "default"

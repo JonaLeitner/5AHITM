@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://mkug1wju83lt" path="res://Assets/Sprites/SpaceBackground.png" id="4_d5x1h"]
 [ext_resource type="Script" uid="uid://c0tf55qn0i1hb" path="res://Scripts/SpawnManager.cs" id="6_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://ygry4t3pp1ew" path="res://Prefabs/asteroid.tscn" id="7_nfk4m"]
+[ext_resource type="PackedScene" uid="uid://x4t2j5dgge5s" path="res://Prefabs/damage.tscn" id="8_7ycvg"]
+[ext_resource type="PackedScene" uid="uid://j2yhha8kgunu" path="res://Prefabs/thruster.tscn" id="9_wr18j"]
 
 [sub_resource type="Curve" id="Curve_ldjdr"]
 _limits = [1.0, 2.0, 0.0, 1.0]
@@ -14,17 +16,6 @@ _data = [Vector2(0.0076045617, 1), 0.0, 0.0, 0, 0, Vector2(0.25475284, 1.5463917
 point_count = 6
 
 [node name="WorldRoot" type="Node2D" unique_id=34690621]
-
-[node name="Player" type="Sprite2D" parent="." unique_id=2070182128]
-position = Vector2(82, 121)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_gyfs4")
-script = ExtResource("2_2c62f")
-_laserPrefab = ExtResource("3_gyfs4")
-_laserSpawnOffset = Vector2(0, -40)
-
-[node name="LaserSound" type="AudioStreamPlayer2D" parent="Player" unique_id=301006923]
-stream = ExtResource("4_8mm7a")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1213210453]
 z_index = -1
@@ -36,3 +27,36 @@ texture = ExtResource("4_d5x1h")
 script = ExtResource("6_hq1ik")
 _asteroidPrefab = ExtResource("7_nfk4m")
 _spawnRate = SubResource("Curve_ldjdr")
+
+[node name="Player" type="Node2D" parent="." unique_id=478079363 node_paths=PackedStringArray("_damage01", "_damage02")]
+script = ExtResource("2_2c62f")
+_laserPrefab = ExtResource("3_gyfs4")
+_damage01 = NodePath("Damage_One")
+_damage02 = NodePath("Damage_Two")
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="Player" unique_id=301006923]
+scale = Vector2(0.2, 0.2)
+stream = ExtResource("4_8mm7a")
+
+[node name="Collider" type="Area2D" parent="Player" unique_id=1356272386]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/Collider" unique_id=1709259412]
+polygon = PackedVector2Array(-14, -41, 11, -41, 15, -36, 15, -2, 17, 10, 30, 27, 30, 22, 33, 22, 33, 40, 33, 44, 11, 36, -13, 36, -33, 44, -33, 24, -30, 24, -30, 28, -17, 12, -14, 0)
+
+[node name="PlayerSprite" type="Sprite2D" parent="Player/Collider" unique_id=2070182128]
+z_index = 2
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_gyfs4")
+
+[node name="Damage_One" parent="Player" unique_id=1409147006 instance=ExtResource("8_7ycvg")]
+visible = false
+position = Vector2(22.445, 57.34)
+
+[node name="Damage_Two" parent="Player" unique_id=1370434178 instance=ExtResource("8_7ycvg")]
+visible = false
+position = Vector2(-11.14, 39.79)
+
+[node name="Thruster" parent="Player" unique_id=1346453894 instance=ExtResource("9_wr18j")]
+z_index = 1
+position = Vector2(0, 42.785)
+scale = Vector2(0.1, 0.1)

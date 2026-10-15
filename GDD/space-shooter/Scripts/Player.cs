@@ -1,8 +1,9 @@
 using Godot;
 using System;
 using SpaceShooter.Scripts;
+using SpaceShooter.Scripts.Eventing;
 
-public partial class Player : Sprite2D
+public partial class Player : Node2D
 {
     [Export]
     private float _startX = 570F;
@@ -24,6 +25,13 @@ public partial class Player : Sprite2D
 
     [Export] 
     private double _shootCooldownSeconds = 0.5D;
+
+    [Export] private Node2D? _damage01;
+    [Export] private Node2D? _damage02;
+
+    private const int MaxLives = 3;
+    private EventManager? _eventManager;
+    private int _lives;
 
     [Export] private Vector2 _laserSpawnOffset = Vector2.Up * 20F;
 
@@ -47,8 +55,43 @@ public partial class Player : Sprite2D
         _boundaries = DetermineBoundaries();
         _lastShotTime = 0D;
         _laserSound = GetNode<AudioStreamPlayer2D>("LaserSound");
+        _lives = MaxLives;
+        _eventManager = this.GetNodeOrThrow<EventManager>(EventManager.Path);
+        _damage01?.Hide();
+        _damage02?.Hide();
+        
+    }
 
+    public void TakeDamage()
+    {
+        _lives = Math.Clamp(_lives - 1, 0, MaxLives);
+        _eventManager?.Broadcast(new Events.PlayerLifeLost(_lives));
+        GD.Print($"Player lost a life, {_lives} remaining");
 
+        switch (_lives)
+        {
+            case >= MaxLives:
+            {
+                _damage01?.Hide();
+                _damage02?.Hide();
+
+                break;
+            }
+            case 2:
+            {
+                _damage01?.Show();
+                _damage02?.Hide();
+                break;
+            }
+            default:
+            {
+                _damage01?.Show();
+                _damage02?.Show();
+                
+                break;
+            }
+            
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -131,14 +174,20 @@ public partial class Player : Sprite2D
 
     private PlayerBoundaries DetermineBoundaries()
     {
+
+        const int XOffset = 20;
+        
         Vector2 windowSize = GetViewportRect().Size;
-        Vector2 textureSize = Texture.GetSize();
-        Vector2 scaledSize = textureSize * Scale;
+
+        var sprite = this.GetNodeOrThrow<Sprite2D>("Collider/PlayerSprite");
+        
+        Vector2 textureSize = sprite.Texture.GetSize();
+        Vector2 scaledSize = textureSize * sprite.Scale;
         Vector2 halfSize = scaledSize / 2F;
 
 
-        return new(halfSize.X,
-            windowSize.X - halfSize.X,
+        return new(halfSize.X - XOffset,
+            windowSize.X - halfSize.X + XOffset,
             _minY,
             _maxY);
     }
